@@ -1,0 +1,24 @@
+{%extends 'base.html' %}
+    {%load static%}
+    {% block styles %}
+    {{block.super}}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    {% endblock %}
+    {% block content %}
+
+        <h1>Liste des films</h1>
+        <ul>
+            <div class="row">
+                <div class="col"><b>Nom:</b></div>
+                <div class="col"><b>Date de sortie</b></div>
+                <div class="col"><b>Réalisateur</b></div>
+            </div></br>
+            {% elem in objets %}
+                <div class="row">
+                    <div class="col">{{elem.name}}</div>
+                    <div class="col">{{elem.realease_date}}</div>
+                    <div class="col">{{elem.realisator</div>
+                </div>
+            {% endfor %}
+        </ul>
+        {% endblock %}
