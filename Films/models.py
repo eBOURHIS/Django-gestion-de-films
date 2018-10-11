@@ -17,16 +17,16 @@ class Genre(models.Model):
 
 class Actor(models.Model):
     firstname = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
 
 class Realisator(models.Model):
     firstname = models.CharField(max_length=50)
     name = models.CharField(max_length=50)
 
 class Comment(models.Model):
-    user = models.CharField(max_length=50)
+    user = models.OneToOneField('User', on_delete=False)
     text = models.TextField(max_length=1000)
     score = models.FloatField(max_length=50)
-    user = models.OneToOneField('User', on_delete=False)
 
 class User(models.Model):
     login = models.CharField(max_length=50)
