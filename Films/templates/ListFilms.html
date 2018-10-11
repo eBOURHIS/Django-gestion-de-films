@@ -1,24 +1,51 @@
-{% extends 'base.html' %}
-    {%load static%}
-    {% block styles %}
-    {{block.super}}
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    {% endblock %}
-    {% block content %}
+{% extends 'base.html' %} 
+{% load static %}
 
-        <h1>Liste des films</h1>
-        <ul>
-            <div class="row">
-                <div class="col"><b>Nom:</b></div>
-                <div class="col"><b>Date de sortie</b></div>
-                <div class="col"><b>Réalisateur</b></div>
-            </div></br>
+{% block title %}
+Les Contacts
+{% endblock %}
+
+{% block styles %} 
+{{ block.super }}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+    crossorigin="anonymous"> 
+    {% endblock %} 
+    
+    {% block content %}
+<div class="table-responsive">
+    <table class="table table-hover table-striped table-dark table-bordered">
+
+        <caption>Liste des contacts</caption>
+        <thead class="thead-light">
+            <tr>
+                <th scope="col1" class="center">Titre</th>
+                <th scope="col2" class="center">Réalisateur</th>
+                <th scope="col3" class="center">Date de sortie</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
             {% for elem in objets %}
-                <div class="row">
-                    <div class="col">{{elem.title}}</div>
-                    <div class="col">{{elem.realease_date}}</div>
-                    <div class="col">{{elem.realisator}}</div>
-                </div>
+
+            <tr>
+                <td class="center">{{elem.title}}</td>
+                <td class="center">{{elem.realisator.name}}</td>
+                <td class="center">{{elem.realease_date}}</td>
+                <!-- <td class="center"><a href="edit/{{elem.pk}}"><i class="fas fa-pen"></i></a></td>
+                <td class="center"><a href="delete/{{elem.pk}}"><i class="fas fa-trash"></i></a></td> -->
+
+                </td>
+            </tr>
+
             {% endfor %}
-        </ul>
-        {% endblock %}
+
+        </tbody>
+    </table>
+</div>
+
+<!-- <a class="btn btn-primary btn-lg" href="/contacts/">Ajouter un contact</a> -->
+{% endblock %}
+
+
+</html>
