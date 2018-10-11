@@ -1,4 +1,4 @@
-{%extends 'base.html' %}
+{% extends 'base.html' %}
     {%load static%}
     {% block styles %}
     {{block.super}}
@@ -13,11 +13,11 @@
                 <div class="col"><b>Date de sortie</b></div>
                 <div class="col"><b>Réalisateur</b></div>
             </div></br>
-            {% elem in objets %}
+            {% for elem in objets %}
                 <div class="row">
-                    <div class="col">{{elem.name}}</div>
+                    <div class="col">{{elem.title}}</div>
                     <div class="col">{{elem.realease_date}}</div>
-                    <div class="col">{{elem.realisator</div>
+                    <div class="col">{{elem.realisator}}</div>
                 </div>
             {% endfor %}
         </ul>
