@@ -6,6 +6,9 @@ class Realisator(models.Model):
     firstname = models.CharField(max_length=50)
     name = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.firstname + " " + self.name
+
 class Movie(models.Model):
     title = models.CharField(max_length=50)
     score = models.FloatField(max_length=20)
@@ -21,6 +24,9 @@ class Genre(models.Model):
 class Actor(models.Model):
     firstname = models.CharField(max_length=50)
     name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.firstname + " " + self.name
 
 class User(models.Model):
     login = models.CharField(max_length=50)

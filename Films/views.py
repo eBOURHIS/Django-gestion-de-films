@@ -59,8 +59,4 @@ class FilmForm(ModelForm):
         self.fields['genre'].label = "Genre"
     class Meta:
         model = Movie
-        fields = ('title', 'score','realease_date','realisator','actors','genre','comments')
-        widgets = {
-            'comments': Textarea(attrs={'cols':60,'rows':10}),
-            #'realease_date': models.DateField(),
-        }
+        fields = ('title', 'score','realease_date','realisator','actors','genre')

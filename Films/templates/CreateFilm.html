@@ -9,7 +9,7 @@
     
         <h3>Créer un nouveau film</h3>
         <div class="row">
-            <form action="/film/add" method="post">
+            <form action="/films/add" method="post">
                 {% csrf_token %}
                 {{form}}
             <input type="submit">
