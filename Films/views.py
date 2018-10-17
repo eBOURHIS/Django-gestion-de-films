@@ -168,3 +168,21 @@ def AddComment(request):
             return redirect(reverse('ListFilms'))
     context = {'form':form}
     return render(request, 'CreateComment.html',context)
+
+def DeleteComment(request, comment_id):
+    objet = Comment.objects.get(pk=comment_id)
+    objet.delete()
+    return redirect(reverse('ListFilms'))
+
+def UpdateComment(request, comment_id):
+    objet = Comment.objects.get(pk=comment_id)
+    if request.method == "POST":
+        form = CommentForm(request.POST, instance=objet)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Modification du commentaire réalisé')
+            context = {'objet':objet}
+            return redirect(reverse('ListFilms'))
+    form = CommentForm(instance=objet)
+    context = {'form':form, 'objet':objet}
+    return redirect(reverse('ListFilms'))
