@@ -12,9 +12,13 @@ urlpatterns = [
 
     #Acteur
     path(r'addActor', views.AddActor, name='AddActor'),
+    path(r'updateActor/<int:actor_id>', views.UpdateActor, name='UpdateActor'),
+    path(r'deleteActor/<int:actor_id>', views.DeleteActor, name='DeleteActor'),
 
     #Realisateur
     path(r'addRealisator', views.AddRealisator, name='AddRealisator'),
+    path(r'updateRealisator/<int:realisator_id>', views.UpdateRealisator, name='UpdateRealisator'),
+    path(r'deleteRealisator/<int:realisator_id>', views.DeleteRealisator, name='DeleteRealisator'),
 
     #Comment
     path(r'addComment', views.AddComment, name='AddComment')    

@@ -86,6 +86,24 @@ def AddActor(request):
     context = {'form':form}
     return render(request, 'CreateActor.html',context)
 
+def DeleteActor(request, actor_id):
+    objet = Actor.objects.get(pk=actor_id)
+    objet.delete()
+    return redirect(reverse('ListFilms'))
+
+def UpdateActor(request, actor_id):
+    objet = Actor.objects.get(pk=actor_id)
+    if request.method == "POST":
+        form = FilmForm(request.POST, instance=objet)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Modification de acteur éffectuée')
+            context = {'objet':objet}
+            return redirect(reverse('ListFilms'))
+    form = ActorForm(instance=objet)
+    context = {'form':form, 'objet':objet}
+    return redirect(reverse('ListFilms'))
+
 #Realisateur
 
 class RealisatorForm(ModelForm):
@@ -108,6 +126,26 @@ def AddRealisator(request):
             return redirect(reverse('ListFilms'))
     context = {'form':form}
     return render(request, 'CreateRealisator.html',context)
+
+def DeleteRealisator(request, realisator_id):
+    objet = Realisator.objects.get(pk=realisator_id)
+    objet.delete()
+    return redirect(reverse('ListFilms'))
+
+def UpdateRealisator(request, realisator_id):
+    objet = Realisator.objects.get(pk=realisator_id)
+    if request.method == "POST":
+        form = RealisatorForm(request.POST, instance=objet)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Modification de realisateur éffectuée')
+            context = {'objet':objet}
+            return redirect(reverse('ListFilms'))
+    form = RealisatorForm(instance=objet)
+    context = {'form':form, 'objet':objet}
+    return redirect(reverse('ListFilms'))
+
+#Comment
 
 class CommentForm(ModelForm):
     def __init__(self, *args, **kwargs):
