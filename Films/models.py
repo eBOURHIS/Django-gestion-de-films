@@ -34,7 +34,6 @@ class User(models.Model):
     admin = models.BooleanField(default=False)
 
 class Comment(models.Model):
-    user = models.OneToOneField('User', on_delete=False)
     text = models.TextField(max_length=1000)
     score = models.FloatField(max_length=50)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="users", default="")

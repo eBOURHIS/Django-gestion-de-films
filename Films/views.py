@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from Films.models import Movie
+from Films.models import Movie, Actor, Realisator, Comment, User
 from django.forms import ModelForm, Textarea
 from django import forms
 from django.contrib import messages
@@ -12,6 +12,8 @@ from django.db import models
 
 
 # Create your views here.
+
+#Film
 
 def ListFilms(request):
     objets = Movie.objects.all().order_by('title')
@@ -44,7 +46,7 @@ def AddFilm(request):
             new_Film = form.save()
             messages.success(request, 'Nouveau Film' + new_Film.title)
             context = {'objet': new_Film}
-            return render(request, 'ListFilms.html', context)
+            return redirect(reverse('ListFilms'))
     context = {'form':form}
     return render(request, 'CreateFilm.html',context)
 
@@ -60,3 +62,71 @@ class FilmForm(ModelForm):
     class Meta:
         model = Movie
         fields = ('title', 'score','realease_date','realisator','actors','genre')
+
+#Acteur
+
+class ActorForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ActorForm, self).__init__(*args, **kwargs)
+        self.fields['firstname'].label = "Prénom"
+        self.fields['name'].label = "Nom"
+    class Meta:
+        model = Actor
+        fields = ('firstname', 'name')
+
+def AddActor(request):
+    form = ActorForm()
+    if request.method == 'POST':
+        form = ActorForm(request.POST)
+        if form.is_valid():
+            new_Actor = form.save()
+            messages.success(request, 'Nouveau acteur')
+            context = {'objet': new_Actor}
+            return redirect(reverse('ListFilms'))
+    context = {'form':form}
+    return render(request, 'CreateActor.html',context)
+
+#Realisateur
+
+class RealisatorForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(RealisatorForm, self).__init__(*args, **kwargs)
+        self.fields['firstname'].label = "Prénom"
+        self.fields['name'].label = "Nom"
+    class Meta:
+        model = Realisator
+        fields = ('firstname', 'name')
+
+def AddRealisator(request):
+    form = RealisatorForm()
+    if request.method == 'POST':
+        form = RealisatorForm(request.POST)
+        if form.is_valid():
+            new_Realisator = form.save()
+            messages.success(request, 'Nouveau realisateur')
+            context = {'objet': new_Realisator}
+            return redirect(reverse('ListFilms'))
+    context = {'form':form}
+    return render(request, 'CreateRealisator.html',context)
+
+class CommentForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(CommentForm, self).__init__(*args, **kwargs)
+        self.fields['text'].label = "Commentaire"
+        self.fields['score'].label = "Note"
+        self.fields['user'].label = "Utilisateur"
+    class Meta:
+        model = Comment
+        fields = ('text', 'score', 'user')
+
+def AddComment(request):
+    form = CommentForm()
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            new_Comment = form.save()
+            messages.success(request, 'Nouveau comment')
+            context = {'objet': new_Comment}
+            return redirect(reverse('ListFilms'))
+    context = {'form':form}
+    return render(request, 'CreateComment.html',context)
