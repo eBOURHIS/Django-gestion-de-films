@@ -1,0 +1,49 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block title %}
+Détail
+{% endblock %}
+
+{% block styles %} 
+{{ block.super }}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+    crossorigin="anonymous"> 
+    {% endblock %} 
+    
+    {% block content %}
+<div class="table-responsive">
+    <table class="table table-hover table-striped table-dark table-bordered">
+        <tbody>
+            <td class="center">
+                {{objet.title}}
+            </td>
+            <td class="center">
+                {{objet.realease_date}}
+            </td>
+            <td class="center">
+                {{objet.realisator.firstname}} {{objet.realisator.name}}
+            </td>
+            <td class="center">
+                {{objet.actors.get.firstname}} {{objet.actors.get.name}}
+            </td>
+            <td class="center">
+                {{objet.genre}}
+            </td>
+            <td class="center">
+                {{objet.score}}
+            </td>
+            <td class="center">
+                {{objet.comments.get.user.login}}
+            </td>
+            <td class="center">
+                {{objet.comments.get.text}}
+            </td>
+            <td class="center">
+                {{objet.comments.get.score}}
+            </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}
