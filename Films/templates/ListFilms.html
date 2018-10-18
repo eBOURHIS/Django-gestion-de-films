@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Les Contacts
+Les Films
 {% endblock %}
 
 {% block styles %} 
@@ -14,38 +14,26 @@ Les Contacts
     {% block content %}
 <div class="table-responsive">
     <table class="table table-hover table-striped table-dark table-bordered">
-
-        <caption>Liste des films</caption>
-        <thead class="thead-light">
-            <tr>
-                <th scope="col1" class="center">Titre</th>
-                <th scope="col2" class="center">Réalisateur</th>
-                <th scope="col3" class="center">Date de sortie</th>
-            </tr>
-        </thead>
-
         <tbody>
-
-            {% for elem in objets %}
-
-            <tr>
-                <td class="center">{{elem.title}}</td>
-                <td class="center">{{elem.realisator.name}}</td>
-                <td class="center">{{elem.realease_date}}</td>
+            <tr>               
+                {% for elem in objets %}
+                    <th>
+                        <div class="card" style="width: 15rem;">
+                            <img class="card-img-top" src="https://fakeimg.pl/50x50/" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title" style="color:black">{{elem.title}}</h5>
+                                <p class="card-text" style="color:black">{{elem.realisator.name}}</p>
+                                <p class="card-text" style="color:black">{{elem.realease_date}}</p>
+                                <a href="detail/{{elem.pk}}" class="btn btn-primary">Détails</a>
+                            </div>  
+                        </div>
+                    </th>
                 <!-- <td class="center"><a href="edit/{{elem.pk}}"><i class="fas fa-pen"></i></a></td>
                 <td class="center"><a href="delete/{{elem.pk}}"><i class="fas fa-trash"></i></a></td> -->
-
-                </td>
+                {% endfor %}
             </tr>
-
-            {% endfor %}
-
         </tbody>
     </table>
 </div>
 
-<!-- <a class="btn btn-primary btn-lg" href="/contacts/">Ajouter un contact</a> -->
 {% endblock %}
-
-
-</html>

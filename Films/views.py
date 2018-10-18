@@ -22,7 +22,8 @@ def ListFilms(request):
 def DeleteFilm(request, film_id):
     objet = Movie.objects.get(pk=film_id)
     objet.delete()
-    return render(request, 'ListFilms.html')
+    objets = Movie.objects.all().order_by('title')
+    return render(request, 'ListFilms.html',{'objets':objets})
 
 @login_required
 def UpdateFilm(request, film_id):
@@ -31,7 +32,7 @@ def UpdateFilm(request, film_id):
         form = FilmForm(request.POST, instance=objet)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Modification du film: ' +objet.title+' éffectuée')
+            messages.success(request, 'Modification du film: ' +objet.title+' effectuée')
             context = {'objet':objet}
             return render(request,'ListFilms.html', context)
     form = FilmForm(instance=objet)
@@ -50,6 +51,10 @@ def AddFilm(request):
             return render(request, 'ListFilms.html', context)
     context = {'form':form}
     return render(request, 'CreateFilm.html',context)
+	
+def DetailFilm(request, film_id):
+    objet = Movie.objects.get(pk=film_id)
+    return render(request,'DetailFilm.html',{'objet':objet})
 
 class FilmForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -67,5 +72,3 @@ class FilmForm(ModelForm):
             'comments': Textarea(attrs={'cols':60,'rows':10}),
             #'realease_date': models.DateField(),
         }
-
-
