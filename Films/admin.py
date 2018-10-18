@@ -13,12 +13,11 @@ class RealisatorAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('user', 'text', 'score')
 
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('login', 'password', 'admin')
 
 admin.site.register(Movie)#MovieAdmin
 admin.site.register(Genre)
 admin.site.register(Actor, ActorAdmin)
 admin.site.register(Realisator, RealisatorAdmin)
 admin.site.register(Comment, CommentAdmin)
-admin.site.register(User, UserAdmin)
+
+

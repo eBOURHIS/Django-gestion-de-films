@@ -7,22 +7,25 @@ from django.urls import reverse
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.db import models
-
-
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
 
+@login_required
 def ListFilms(request):
     objets = Movie.objects.all().order_by('title')
     return render(request,'ListFilms.html',{'objets':objets})
 
+@login_required
 def DeleteFilm(request, film_id):
     objet = Movie.objects.get(pk=film_id)
     objet.delete()
     objets = Movie.objects.all().order_by('title')
     return render(request, 'ListFilms.html',{'objets':objets})
 
+@login_required
 def UpdateFilm(request, film_id):
     objet = Movie.objects.get(pk=film_id)
     if request.method == "POST":
@@ -36,7 +39,7 @@ def UpdateFilm(request, film_id):
     context = {'form':form, 'objet':objet}
     return render(request,'UpdateFilm.html', context)
 
-
+@login_required
 def AddFilm(request):
     form = FilmForm()
     if request.method == 'POST':
