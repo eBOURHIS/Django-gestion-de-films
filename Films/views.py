@@ -53,7 +53,7 @@ def AddFilm(request):
     return render(request, 'CreateFilm.html',context)
 	
 def DetailFilm(request, film_id):
-    objet = Movie.objects.get(pk=film_id)
+    objet = Movie.objects.all().filter(pk=film_id)
     return render(request,'DetailFilm.html',{'objet':objet})
 
 class FilmForm(ModelForm):
