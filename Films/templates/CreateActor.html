@@ -7,9 +7,9 @@
     {% endblock %}
     {% block content %}
     
-        <h3>Créer un nouveau film</h3>
+        <h3>Créer un nouveau acteur</h3>
         <div class="row">
-            <form action="/films/addFilm" method="post">
+            <form action="/films/addActor" method="post">
                 {% csrf_token %}
                 {{form}}
             <input type="submit">
