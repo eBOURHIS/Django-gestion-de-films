@@ -19,6 +19,10 @@ def ListFilms(request):
     objets = Movie.objects.all().order_by('title')
     return render(request,'ListFilms.html',{'objets':objets})
 
+def detail(request, movie_id):
+    movie = Movie.objects.get(pk=movie_id)
+    return render(request, 'detail.html', {'movie':movie})
+
 def DeleteFilm(request, film_id):
     objet = Movie.objects.get(pk=film_id)
     objet.delete()

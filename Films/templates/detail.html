@@ -1,0 +1,26 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block title %}
+Les Contacts
+{% endblock %}
+
+{% block content %}
+<div class="col-6 bg-info text-center">
+    <h1>{{ movie.title }}</h1>
+    <h3>{{movie.score}}/20</h3>
+    Date de sortie : {{movie.realease_date}}<br>
+    Realisateur : <u>{{movie.realisator.firstname}} {{movie.realisator.name}}</u> <br>
+    Acteur : <br>
+    {% for actor in movie.actors.all %}
+    - {{ actor }}<br>
+    {% endfor %}
+</div>
+<div class="col-6 text-center">
+    Commentaire
+    {% for comment in movie.comments.all %}
+    {{ comment.text }}
+    {% endfor %}
+</div>
+{% endblock %}
+</html>
