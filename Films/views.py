@@ -7,14 +7,13 @@ from django.urls import reverse
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.db import models
-
-
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
 
-#Film
-
+@login_required
 def ListFilms(request):
     objets = Movie.objects.all().order_by('title')
     return render(request,'ListFilms.html',{'objets':objets})
@@ -36,22 +35,24 @@ def detail(request, movie_id):
 def DeleteFilm(request, film_id):
     objet = Movie.objects.get(pk=film_id)
     objet.delete()
-    return render(request, 'ListFilms.html')
+    objets = Movie.objects.all().order_by('title')
+    return render(request, 'ListFilms.html',{'objets':objets})
 
+@login_required
 def UpdateFilm(request, film_id):
     objet = Movie.objects.get(pk=film_id)
     if request.method == "POST":
         form = FilmForm(request.POST, instance=objet)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Modification du film: ' +objet.title+' éffectuée')
+            messages.success(request, 'Modification du film: ' +objet.title+' effectuée')
             context = {'objet':objet}
             return render(request,'ListFilms.html', context)
     form = FilmForm(instance=objet)
     context = {'form':form, 'objet':objet}
     return render(request,'UpdateFilm.html', context)
 
-
+@login_required
 def AddFilm(request):
     form = FilmForm()
     if request.method == 'POST':
@@ -63,6 +64,10 @@ def AddFilm(request):
             return redirect(reverse('ListFilms'))
     context = {'form':form}
     return render(request, 'CreateFilm.html',context)
+
+def DetailFilm(request, film_id):
+    objet = Movie.objects.get(pk=film_id)
+    return render(request,'DetailFilm.html',{'objet':objet})
 
 class FilmForm(ModelForm):
     def __init__(self, *args, **kwargs):

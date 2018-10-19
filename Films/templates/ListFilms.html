@@ -1,51 +1,34 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 {% load static %}
 
 {% block title %}
-Les Contacts
+Les Films
 {% endblock %}
 
-{% block styles %} 
+{% block styles %}
 {{ block.super }}
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-    crossorigin="anonymous"> 
-    {% endblock %} 
-    
-    {% block content %}
-<div class="table-responsive">
-    <table class="table table-hover table-striped table-dark table-bordered">
-
-        <caption>Liste des films</caption>
-        <thead class="thead-light">
-            <tr>
-                <th scope="col1" class="center">Titre</th>
-                <th scope="col2" class="center">Réalisateur</th>
-                <th scope="col3" class="center">Date de sortie</th>
-            </tr>
-        </thead>
-
-        <tbody>
-
-            {% for elem in objets %}
-
-            <tr>
-                <td class="center">{{elem.title}}</td>
-                <td class="center">{{elem.realisator}}</td>
-                <td class="center">{{elem.realease_date}}</td>
-                <!-- <td class="center"><a href="edit/{{elem.pk}}"><i class="fas fa-pen"></i></a></td>
-                <td class="center"><a href="delete/{{elem.pk}}"><i class="fas fa-trash"></i></a></td> -->
-
-                </td>
-            </tr>
-
-            {% endfor %}
-
-        </tbody>
-    </table>
-</div>
-
-<!-- <a class="btn btn-primary btn-lg" href="/contacts/">Ajouter un contact</a> -->
+    crossorigin="anonymous">
 {% endblock %}
 
+{% block content %}
+<div class="card-deck mt-5 container-fluid">
+    {% for elem in objets %}
+<div class="col-4">
+    <div class="card">
+        <img class="card-img-top img-fluid" src="https://fakeimg.pl/350x200/" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">{{elem.title}}</h5>
+            <p class="card-text">{{elem.realisator.name}}</p>
+            <p class="card-text">{{elem.realease_date}}</p>
+            <a href="detail/{{elem.pk}}" class="btn btn-outline-primary">Voir</a>
+        </div>
+        
+    </div>
+</div>
+<!-- <td class="center"><a href="edit/{{elem.pk}}"><i class="fas fa-pen"></i></a></td>
+                <td class="center"><a href="delete/{{elem.pk}}"><i class="fas fa-trash"></i></a></td> -->
+{% endfor %}
+</div>
 
-</html>
+{% endblock %}
