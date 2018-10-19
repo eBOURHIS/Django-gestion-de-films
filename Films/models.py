@@ -30,11 +30,6 @@ class Actor(models.Model):
     def __str__(self):
         return self.firstname + " " + self.name
 
-class User(models.Model):
-    login = models.CharField(max_length=50)
-    password = models.CharField(max_length=50)
-    admin = models.BooleanField(default=False)
-
 class Comment(models.Model):
     text = models.TextField(max_length=1000)
     score = models.FloatField(max_length=50)

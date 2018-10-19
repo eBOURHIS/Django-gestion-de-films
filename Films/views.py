@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from Films.models import Movie, Actor, Realisator, Comment, User
+from Films.models import Movie, Actor, Realisator, Comment
 from django.forms import ModelForm, Textarea
 from django import forms
 from django.contrib import messages
