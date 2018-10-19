@@ -24,14 +24,20 @@ Les Contacts
     </section>
 </div>
 <div class="col-6 text-center">
-    Commentaire
-    {% for comment in movie.comments.all %}
-    {{ comment.user.login }}
-    {{ comment.text }}
+    <h4>Commentaire</h4>
+    <ul class="list-group">
+            {% for comment in movie.comments.all %}
+            
+                <li class="list-group-item"> {{comment.user.login }}
+                ({{ comment.score }}/20)<br>
+    {{ comment.text }}<br>
+    <a href="/films/deleteComment/{{comment.id}}/{{movie.id}}" class="btn btn-danger">Supprimer</a></li>
     {% endfor %}
+    </ul>
+    </div>
 </div>
 <div class="row">
-        <form action="/films/detail/{{id}}" method="post">
+        <form action="/films/detail/{{movie.id}}" method="post">
             {% csrf_token %}
             {{form}}
         <input type="submit">

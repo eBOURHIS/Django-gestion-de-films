@@ -171,10 +171,10 @@ class CommentForm(ModelForm):
         model = Comment
         fields = ('text', 'score', 'user')
 
-def DeleteComment(request, comment_id):
+def DeleteComment(request, comment_id, movie_id):
     objet = Comment.objects.get(pk=comment_id)
     objet.delete()
-    return redirect(reverse('ListFilms'))
+    return redirect('/films/detail/'+str(movie_id))
 
 def UpdateComment(request, comment_id):
     objet = Comment.objects.get(pk=comment_id)

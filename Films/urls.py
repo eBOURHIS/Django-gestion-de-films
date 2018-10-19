@@ -22,7 +22,7 @@ urlpatterns = [
 
     #Comment
     path(r'updateComment/<int:comment_id>', views.UpdateComment, name='UpdateComment'),
-    path(r'deleteComment/<int:comment_id>', views.DeleteComment, name='DeleteComment'),
+    path(r'deleteComment/<int:comment_id>/<int:movie_id>', views.DeleteComment, name='DeleteComment'),
 
     path(r'detail/<int:movie_id>', views.detail, name='detail'),  
     
