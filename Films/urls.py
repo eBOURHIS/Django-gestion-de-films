@@ -21,7 +21,6 @@ urlpatterns = [
     path(r'deleteRealisator/<int:realisator_id>', views.DeleteRealisator, name='DeleteRealisator'),
 
     #Comment
-    path(r'addComment', views.AddComment, name='AddComment'),
     path(r'updateComment/<int:comment_id>', views.UpdateComment, name='UpdateComment'),
     path(r'deleteComment/<int:comment_id>', views.DeleteComment, name='DeleteComment'),
 

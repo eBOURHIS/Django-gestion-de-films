@@ -21,7 +21,17 @@ def ListFilms(request):
 
 def detail(request, movie_id):
     movie = Movie.objects.get(pk=movie_id)
-    return render(request, 'detail.html', {'movie':movie})
+    form = CommentForm()
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            new_Comment = form.save()
+            movie.comments.add(new_Comment)
+            movie.save
+            messages.success(request, 'Nouveau comment')
+            form = CommentForm()
+    context = {'form':form}
+    return render(request, 'detail.html', {'movie':movie, 'form':form, 'id':movie_id})
 
 def DeleteFilm(request, film_id):
     objet = Movie.objects.get(pk=film_id)
@@ -160,18 +170,6 @@ class CommentForm(ModelForm):
     class Meta:
         model = Comment
         fields = ('text', 'score', 'user')
-
-def AddComment(request):
-    form = CommentForm()
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            new_Comment = form.save()
-            messages.success(request, 'Nouveau comment')
-            context = {'objet': new_Comment}
-            return redirect(reverse('ListFilms'))
-    context = {'form':form}
-    return render(request, 'CreateComment.html',context)
 
 def DeleteComment(request, comment_id):
     objet = Comment.objects.get(pk=comment_id)
