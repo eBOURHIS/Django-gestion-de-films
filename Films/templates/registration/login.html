@@ -1,13 +1,31 @@
 <!-- templates/registration/login.html -->
-{% extends 'base.html' %}
-
-{% block title %}Login{% endblock %}
-
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">  
+</head>
+<body>
+  
 {% block content %}
-<h2>Login</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Login</button>
+
+<div class="container"></div>
+<form method="post" action="/films/list" class="mt-5">
+  <h2 class="form-signin-heading">Veuillez vous connecter</h2>
+  {% csrf_token %} {{ form.as_p }}
+  <button class="btn btn-lg btn-primary" type="submit">Se connecter</button>
 </form>
 {% endblock %}
+
+
+
+
+</div>
+<!-- /container -->
+
+</body>
+</html>

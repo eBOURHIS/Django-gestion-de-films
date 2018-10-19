@@ -1,21 +1,17 @@
-{% extends 'templates/base.html' %}
-
-{% block content %}
-
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
 
 {% if next %}
     {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
+    <p>Votre compte n'a pas accès à cette page. Pour y accéder, 
+        veuillez vous connecter avec un compte administrateur.</p>
     {% else %}
-    <p>Please login to see this page.</p>
+    <p>S'il vous plait, connectez-vous pour voir cette page.</p>
     {% endif %}
 {% endif %}
 
-<form method="post" action="{% url 'login' %}">
+<form method="post" action="{% url 'login' %}" class="mt-5">
 {% csrf_token %}
 <table>
 <tr>
@@ -32,7 +28,5 @@
 <input type="hidden" name="next" value="{{ next }}">
 </form>
 
-{# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-
-{% endblock %}
+<!-- {# Assumes you setup the password_reset view in your URLconf #}
+<p><a href="{% url 'password_reset' %}">Mot de passe oublié ?</a></p> -->

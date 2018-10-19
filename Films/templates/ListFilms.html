@@ -1,39 +1,34 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 {% load static %}
 
 {% block title %}
 Les Films
 {% endblock %}
 
-{% block styles %} 
+{% block styles %}
 {{ block.super }}
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-    crossorigin="anonymous"> 
-    {% endblock %} 
-    
-    {% block content %}
-<div class="table-responsive">
-    <table class="table table-hover table-striped table-dark table-bordered">
-        <tbody>
-            <tr>               
-                {% for elem in objets %}
-                    <th>
-                        <div class="card" style="width: 15rem;">
-                            <img class="card-img-top" src="https://fakeimg.pl/50x50/" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title" style="color:black">{{elem.title}}</h5>
-                                <p class="card-text" style="color:black">{{elem.realisator.name}}</p>
-                                <p class="card-text" style="color:black">{{elem.realease_date}}</p>
-                                <a href="detail/{{elem.pk}}" class="btn btn-primary">Détails</a>
-                            </div>  
-                        </div>
-                    </th>
-                <!-- <td class="center"><a href="edit/{{elem.pk}}"><i class="fas fa-pen"></i></a></td>
+    crossorigin="anonymous">
+{% endblock %}
+
+{% block content %}
+<div class="card-deck mt-5 container-fluid">
+    {% for elem in objets %}
+<div class="col-4">
+    <div class="card">
+        <img class="card-img-top img-fluid" src="https://fakeimg.pl/350x200/" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">{{elem.title}}</h5>
+            <p class="card-text">{{elem.realisator.name}}</p>
+            <p class="card-text">{{elem.realease_date}}</p>
+            <a href="detail/{{elem.pk}}" class="btn btn-outline-primary">Voir</a>
+        </div>
+        
+    </div>
+</div>
+<!-- <td class="center"><a href="edit/{{elem.pk}}"><i class="fas fa-pen"></i></a></td>
                 <td class="center"><a href="delete/{{elem.pk}}"><i class="fas fa-trash"></i></a></td> -->
-                {% endfor %}
-            </tr>
-        </tbody>
-    </table>
+{% endfor %}
 </div>
 
 {% endblock %}
