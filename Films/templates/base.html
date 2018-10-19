@@ -25,21 +25,27 @@
                 <li class="nav-item">
                     <a class="navbar-brand" href="/films/list">
                 </li>
-                <i class="fas fa-home"></i>
+                <i class="fas fa-home">Accueil</i>
                 </a>
+                {% if user.is_authenticated %}
+
                 <li class="nav-item">
                     <a class="nav-link active" href="/accounts/logout">
                         Bonjour {{user}}
-                        <i class="fas fa-sign-out-alt"></i>
+                        <i class="fas fa-sign-out-alt">Déconnexion</i>
                     </a>
                 </li>
+                
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Rechercher" aria-label="Rechercher">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-                    <i class="fa fa-search"></i>
-                </button>
-            </form>
+
+            {% else %}
+
+            <form class="form-inline my-2 my-lg-0" method="post" action="{% url 'login' %}" class="mt-5">
+                    {% csrf_token %} {{ form.as_p }}
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-login"></i>Se connecter</button>
+                  </form>
+
+                  {% endif %}
         </div>
     </nav>
     <div class="container">

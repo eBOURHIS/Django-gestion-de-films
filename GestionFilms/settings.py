@@ -75,7 +75,7 @@ TEMPLATES = [
     },
 ]
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = '/films/list'
 LOGOUT_REDIRECT_URL = 'home'
 
 WSGI_APPLICATION = 'GestionFilms.wsgi.application'

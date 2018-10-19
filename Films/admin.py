@@ -2,7 +2,7 @@ from django.contrib import admin
 from Films.models import Movie, Genre, Actor, Realisator, Comment, User
 
 class MovieAdmin(admin.ModelAdmin):
-    list_display = ('title', 'score', 'realease_date', 'realisator', 'actors', 'genre')
+    list_display = ('title', 'score', 'realease_date', 'realisator', 'actors', 'genre', 'image')
 
 class ActorAdmin(admin.ModelAdmin):
     list_display = ('firstname', 'name')

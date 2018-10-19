@@ -16,11 +16,11 @@ Les Films
     {% for elem in objets %}
 <div class="col-4">
     <div class="card">
-        <img class="card-img-top img-fluid" src="https://fakeimg.pl/350x200/" alt="Card image cap">
+        <img class="card-img-top img-fluid" src="{{elem.image.url}}" alt="image_film" style="width: 350px; height: 200px;">
         <div class="card-body">
             <h5 class="card-title">{{elem.title}}</h5>
-            <p class="card-text">{{elem.realisator.name}}</p>
-            <p class="card-text">{{elem.realease_date}}</p>
+            <p class="card-text">Réalisé par : {{elem.realisator.firstname}} {{elem.realisator.name}}</p>
+            <p class="card-text">Date de sortie : {{elem.realease_date}}</p>
             <a href="detail/{{elem.pk}}" class="btn btn-outline-primary">Voir</a>
         </div>
         

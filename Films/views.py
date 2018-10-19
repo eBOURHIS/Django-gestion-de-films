@@ -13,7 +13,6 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-@login_required
 def ListFilms(request):
     objets = Movie.objects.all().order_by('title')
     return render(request,'ListFilms.html',{'objets':objets})
@@ -32,6 +31,7 @@ def detail(request, movie_id):
     context = {'form':form}
     return render(request, 'detail.html', {'movie':movie, 'form':form, 'id':movie_id})
 
+@login_required
 def DeleteFilm(request, film_id):
     objet = Movie.objects.get(pk=film_id)
     objet.delete()
@@ -93,6 +93,7 @@ class ActorForm(ModelForm):
         model = Actor
         fields = ('firstname', 'name')
 
+@login_required
 def AddActor(request):
     form = ActorForm()
     if request.method == 'POST':
@@ -105,11 +106,13 @@ def AddActor(request):
     context = {'form':form}
     return render(request, 'CreateActor.html',context)
 
+@login_required
 def DeleteActor(request, actor_id):
     objet = Actor.objects.get(pk=actor_id)
     objet.delete()
     return redirect(reverse('ListFilms'))
 
+@login_required
 def UpdateActor(request, actor_id):
     objet = Actor.objects.get(pk=actor_id)
     if request.method == "POST":
@@ -134,6 +137,7 @@ class RealisatorForm(ModelForm):
         model = Realisator
         fields = ('firstname', 'name')
 
+@login_required
 def AddRealisator(request):
     form = RealisatorForm()
     if request.method == 'POST':
@@ -146,11 +150,13 @@ def AddRealisator(request):
     context = {'form':form}
     return render(request, 'CreateRealisator.html',context)
 
+@login_required
 def DeleteRealisator(request, realisator_id):
     objet = Realisator.objects.get(pk=realisator_id)
     objet.delete()
     return redirect(reverse('ListFilms'))
 
+@login_required
 def UpdateRealisator(request, realisator_id):
     objet = Realisator.objects.get(pk=realisator_id)
     if request.method == "POST":
