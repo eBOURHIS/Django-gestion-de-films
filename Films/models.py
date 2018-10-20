@@ -19,7 +19,7 @@ class Movie(models.Model):
     genre = models.CharField(max_length=50)
     actors = models.ManyToManyField('Actor')
     comments = models.ManyToManyField('Comment')
-    image = models.FileField(upload_to='images/')
+    image = models.FileField(upload_to='images/', blank=True, null=True)
 
 class Genre(models.Model):
     name = models.CharField(max_length=50)

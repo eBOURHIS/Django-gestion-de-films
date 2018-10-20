@@ -9,13 +9,20 @@ from django.template import RequestContext
 from django.db import models
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 
 # Create your views here.
 
 def ListFilms(request):
     objets = Movie.objects.all().order_by('title')
-    return render(request,'ListFilms.html',{'objets':objets})
+    paginator = Paginator(objets, 3)
+
+    page = request.GET.get('page')
+
+    objets = paginator.get_page(page)
+
+    return render(request,'ListFilms.html', {'objets':objets})
 
 def detail(request, movie_id):
     movie = Movie.objects.get(pk=movie_id)
@@ -64,10 +71,6 @@ def AddFilm(request):
             return redirect(reverse('ListFilms'))
     context = {'form':form}
     return render(request, 'CreateFilm.html',context)
-
-def DetailFilm(request, film_id):
-    objet = Movie.objects.get(pk=film_id)
-    return render(request,'DetailFilm.html',{'objet':objet})
 
 class FilmForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -177,9 +180,11 @@ class CommentForm(ModelForm):
         super(CommentForm, self).__init__(*args, **kwargs)
         self.fields['text'].label = "Commentaire"
         self.fields['score'].label = "Note"
+        self.fields['user'].label = "Utilisateur"
+
     class Meta:
         model = Comment
-        fields = ('text', 'score')
+        fields = ('text', 'score', 'user')
 
 def DeleteComment(request, comment_id, movie_id):
     objet = Comment.objects.get(pk=comment_id)
