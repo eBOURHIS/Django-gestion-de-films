@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from Films.models import Movie, Actor, Realisator, Comment
+from Films.models import Movie, Actor, Director, Comment
 from django.forms import ModelForm, Textarea
 from django import forms
 from django.contrib import messages
@@ -75,12 +75,12 @@ class FilmForm(ModelForm):
         self.fields['title'].label = "Titre"
         self.fields['score'].label = "Note"
         self.fields['realease_date'].label = "Date de Sortie"
-        self.fields['realisator'].label = "Realisateur"
+        self.fields['director'].label = "Realisateur"
         self.fields['actors'].label = "Acteur"
         self.fields['genre'].label = "Genre"
     class Meta:
         model = Movie
-        fields = ('title', 'score','realease_date','realisator','actors','genre')
+        fields = ('title', 'score','realease_date','director','actors','genre')
 
 #Acteur
 
@@ -128,45 +128,45 @@ def UpdateActor(request, actor_id):
 
 #Realisateur
 
-class RealisatorForm(ModelForm):
+class DirectorForm(ModelForm):
     def __init__(self, *args, **kwargs):
-        super(RealisatorForm, self).__init__(*args, **kwargs)
+        super(DirectorForm, self).__init__(*args, **kwargs)
         self.fields['firstname'].label = "Prénom"
         self.fields['name'].label = "Nom"
     class Meta:
-        model = Realisator
+        model = Director
         fields = ('firstname', 'name')
 
 @login_required
-def AddRealisator(request):
-    form = RealisatorForm()
+def AddDirector(request):
+    form = DirectorForm()
     if request.method == 'POST':
-        form = RealisatorForm(request.POST)
+        form = DirectorForm(request.POST)
         if form.is_valid():
-            new_Realisator = form.save()
+            new_Director = form.save()
             messages.success(request, 'Nouveau realisateur')
-            context = {'objet': new_Realisator}
+            context = {'objet': new_Director}
             return redirect(reverse('ListFilms'))
     context = {'form':form}
-    return render(request, 'CreateRealisator.html',context)
+    return render(request, 'CreateDirector.html',context)
 
 @login_required
-def DeleteRealisator(request, realisator_id):
-    objet = Realisator.objects.get(pk=realisator_id)
+def DeleteDirector(request, director_id):
+    objet = Director.objects.get(pk=director_id)
     objet.delete()
     return redirect(reverse('ListFilms'))
 
 @login_required
-def UpdateRealisator(request, realisator_id):
-    objet = Realisator.objects.get(pk=realisator_id)
+def UpdateDirector(request, director_id):
+    objet = Director.objects.get(pk=director_id)
     if request.method == "POST":
-        form = RealisatorForm(request.POST, instance=objet)
+        form = DirectorForm(request.POST, instance=objet)
         if form.is_valid():
             form.save()
             messages.success(request, 'Modification de realisateur éffectuée')
             context = {'objet':objet}
             return redirect(reverse('ListFilms'))
-    form = RealisatorForm(instance=objet)
+    form = DirectorForm(instance=objet)
     context = {'form':form, 'objet':objet}
     return redirect(reverse('ListFilms'))
 
@@ -177,10 +177,9 @@ class CommentForm(ModelForm):
         super(CommentForm, self).__init__(*args, **kwargs)
         self.fields['text'].label = "Commentaire"
         self.fields['score'].label = "Note"
-        self.fields['user'].label = "Utilisateur"
     class Meta:
         model = Comment
-        fields = ('text', 'score', 'user')
+        fields = ('text', 'score')
 
 def DeleteComment(request, comment_id, movie_id):
     objet = Comment.objects.get(pk=comment_id)

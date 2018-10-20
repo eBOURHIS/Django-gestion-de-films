@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Les Contacts
+<title>Fiche du film</title>
 {% endblock %}
 
 {% block content %}
@@ -15,7 +15,7 @@ Les Contacts
     <ul class="list-group list-group-flush">
     <li class="list-group-item">Date de sortie : {{movie.realease_date}}</li>
     <li class="list-group-item">Genre : {{movie.genre}}</li>
-    <li class="list-group-item">Realisateur : <u>{{movie.realisator}}</u></li>
+    <li class="list-group-item">Realisateur : <u>{{movie.director}}</u></li>
     <li class="list-group-item">Acteur : <br>
     {% for actor in movie.actors.all %}
     - {{ actor }}<br>
