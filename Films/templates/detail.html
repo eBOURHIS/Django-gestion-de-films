@@ -30,7 +30,8 @@
                 <li class="list-group-item"> {{comment.user}}
                 ({{ comment.score }}/20)<br>
     {{ comment.text }}<br>
-    {% if user.is_authenticated %}
+    
+    {% if user == comment.user %}
 
     <a href="/films/deleteComment/{{comment.id}}/{{movie.id}}" class="btn btn-danger">Supprimer</a></li>
 

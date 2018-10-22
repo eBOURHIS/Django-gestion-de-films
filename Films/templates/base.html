@@ -31,6 +31,26 @@
                 </li>
                 <i class="fas fa-home">Accueil</i>
                 </a>
+                {% if user.is_superuser %}
+                <li class="nav-item">
+                    <a class="nav-link active" href="/films/addActor">
+                        <i class="fas fa-plus">Acteur</i>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="/films/addDirector">
+                        <i class="fas fa-plus">Réalisateur</i>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="/films/addFilm">
+                        <i class="fas fa-plus">Film</i>
+                    </a>
+                </li>
+                {% endif %}
+
                 {% if user.is_authenticated %}
 
                 <li class="nav-item">
@@ -39,17 +59,24 @@
                         <i class="fas fa-sign-out-alt">Déconnexion</i>
                     </a>
                 </li>
-                
+
             </ul>
 
             {% else %}
 
             <form class="form-inline my-2 my-lg-0" method="post" action="{% url 'login' %}" class="mt-5">
-                    {% csrf_token %} {{ form.as_p }}
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-login"></i>Se connecter</button>
-                  </form>
+                {% csrf_token %} {{ form.as_p }}
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-login"></i>Se
+                    connecter</button>
+            </form>
 
-                  {% endif %}
+            <form class="form-inline my-2 my-lg-0" method="post" action="/films/signup/" class="mt-5">
+                {% csrf_token %} {{ form.as_p }}
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="fa fa-login"></i>
+                    S'inscrire</button>
+            </form>
+
+            {% endif %}
         </div>
     </nav>
     <div class="container">

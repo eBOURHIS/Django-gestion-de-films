@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from .views import ListFilms
-
+from . import views as core_views
 urlpatterns = [
 
     #Film
@@ -24,6 +24,7 @@ urlpatterns = [
     path(r'updateComment/<int:comment_id>', views.UpdateComment, name='UpdateComment'),
     path(r'deleteComment/<int:comment_id>/<int:movie_id>', views.DeleteComment, name='DeleteComment'),
 
-    path(r'detail/<int:movie_id>', views.detail, name='detail'),  
+    path(r'detail/<int:movie_id>', views.detail, name='detail'),
+    path(r'signup/', core_views.signup, name='signup'),
     
 ]
