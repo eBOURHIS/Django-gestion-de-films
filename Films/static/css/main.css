@@ -25,3 +25,25 @@
 .pagination-number:hover, .pagination-current {
     background-color: rgb(125, 153, 224);
 }
+
+.container-fluid { max-width: 1200px; }
+
+
+
+.card-img-top {
+    width: 100%;
+}
+
+[class*="row"] {
+    margin-bottom: 1em;
+  justify-content: center;
+}
+
+[class*="col-"] {
+	background: #efefef;
+	border: 1px solid #ddd;
+	padding-top: .75rem;
+	padding-bottom: .75rem;
+	width: 100%;
+}
+

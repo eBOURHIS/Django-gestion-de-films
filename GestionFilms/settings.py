@@ -76,7 +76,7 @@ TEMPLATES = [
 ]
 
 LOGIN_REDIRECT_URL = '/films/list'
-LOGOUT_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = '/films/list'
 
 WSGI_APPLICATION = 'GestionFilms.wsgi.application'
 
@@ -129,3 +129,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/images/'
+MEDIA_ROOT = 'images'

@@ -1,6 +1,6 @@
 {%extends 'base.html' %}
 {%load static%}
-{%block title%}<title>Ajouter un film</title>{%endblock%}
+{%block title%}<title>Ajouter un réalisateur</title>{%endblock%}
 {% block styles %}
 {{block.super}}
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
@@ -8,9 +8,9 @@
 {% endblock %}
 {% block content %}
 
-<h3>Créer un nouveau film</h3>
+<h3>Créer un nouveau réalisateur</h3>
 <div class="row">
-    <form action="/films/addFilm" method="post">
+    <form action="/films/addDirector" method="post">
         {% csrf_token %}
         {{form}}
         <input type="submit">

@@ -12,60 +12,66 @@
 {% endblock %}
 
 {% block content %}
-<div class="card-deck mt-5">
-    {% for elem in objets %}
-<div class="col-4">
-    <div class="card">
-        <img class="card-img-top img-fluid" src="{{elem.image}}" alt="image_film" style="width: 350px; height: 200px;">
-        <div class="card-body">
-            <h5 class="card-title">{{elem.title}}</h5>
-            <p class="card-text">Réalisé par : {{elem.director.firstname}} {{elem.director.name}}</p>
-            <p class="card-text">Date de sortie : {{elem.realease_date}}</p>
-            <a href="detail/{{elem.pk}}" class="btn btn-outline-primary">Voir</a>
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="card-deck mt-5">
+            {% for elem in objets %}
+            <div class="card">
+                <img class="card-img-top img-fluid" src="//placehold.it/350x200" alt="Card image cap">
+                <div class="card-block">
+                    <div class="text-center">
+                        <h4 class="card-title">{{elem.title}}</h4>
+                        <p class="card-text">Réalisé par : {{elem.director.firstname}} {{elem.director.name}}</p>
+                        <p class="card-text">Date de sortie : {{elem.realease_date}}</p>
+                        <a href="detail/{{elem.pk}}" class="btn btn-outline-primary btn-lg">Voir</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
 </div>
+
 <!-- <td class="center"><a href="edit/{{elem.pk}}"><i class="fas fa-pen"></i></a></td>
                 <td class="center"><a href="delete/{{elem.pk}}"><i class="fas fa-trash"></i></a></td> -->
-{% endfor %}
+
 
 <div class="row align-items-center justify-content-center">
-<div class="pagination">
+    <div class="pagination">
 
-  {% if objets.has_previous %}
+        {% if objets.has_previous %}
+        <a class="pagination-action" href="?page=1">
+            <i class="fas fa-angle-double-left"></i>
+        </a>
+        <a class="pagination-action" href="?page={{ objets.previous_page_number }}">
+            <i class="fas fa-angle-left"></i>
+        </a>
+        {% endif %}
 
-    <a class="pagination-action" href="?page=1">
-        <i class="fas fa-angle-double-left"></i>
-    </a>
+        {% for num in objets.paginator.page_range %}
 
-    <a class="pagination-action" href="?page={{ objets.previous_page_number }}">
-      <i class="fas fa-angle-left"></i>
-    </a>
+        {% if objets.number == num %}
+        <span class="pagination-number pagination-current">{{ num }}</span>
+        {% elif num > objets.number|add:'-3' and num < objets.number|add:'3' %} <a class="pagination-number" href="?page={{ num }}">{{num}}</a>
+            {% endif %}
 
-  {% endif %}
+            {% endfor %}
 
-  {% for num in objets.paginator.page_range %}
+            {% if objets.has_next %}
 
-    {% if objets.number == num %}
-      <span class="pagination-number pagination-current">{{ num }}</span>
-    {% elif num > objets.number|add:'-3' and num < objets.number|add:'3' %}
-      <a class="pagination-number" href="?page={{ num }}">{{ num }}</a>
-    {% endif %}
+            <a class="pagination-action" href="?page={{ objets.next_page_number }}">
+                <i class="fas fa-angle-right"></i>
+            </a>
 
-  {% endfor %}
+            <a class="pagination-action" href="?page={{ objets.paginator.num_pages }}">
+                <i class="fas fa-angle-double-right"></i>
+            </a>
 
-  {% if objets.has_next %}
+            {% endif %}
 
-  <a class="pagination-action" href="?page={{ objets.next_page_number }}">
-      <i class="fas fa-angle-right"></i>
-  </a>
-
-    <a class="pagination-action" href="?page={{ objets.paginator.num_pages }}">
-        <i class="fas fa-angle-double-right"></i>
-    </a>
-    
-  {% endif %}
-
-</div>
+    </div>
 </div>
 {% endblock %}

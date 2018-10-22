@@ -1,12 +1,11 @@
 <!-- templates/home.html-->
 {% extends 'base.html' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}<titre>Accueil</titre>{% endblock %}
 
 {% block content %}
 {% if user.is_authenticated %}
-  Bonjour {{ user.username }} !
-  <p><a href="{% url 'logout' %}">Déconnexion</a></p>
+  <h3>Bonjour {{ user.username.upper }} !</h3>
 {% else %}
   <h3>Vous n'êtes pas connecté(e)</h3>
 {% endif %}
