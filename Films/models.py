@@ -34,5 +34,5 @@ class Actor(models.Model):
 class Comment(models.Model):
     text = models.TextField(max_length=1000)
     score = models.FloatField(max_length=50)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="utilisateur", default="")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="utilisateur", blank=True, null=True)
     #comment = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name="comments", default="")

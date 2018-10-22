@@ -46,6 +46,8 @@ def detail(request, movie_id):
         form = CommentForm(request.POST)
         if form.is_valid():
             new_Comment = form.save()
+            new_Comment.user = request.user
+            new_Comment.save()
             movie.comments.add(new_Comment)
             movie.save
             messages.success(request, 'Nouveau comment')
@@ -195,11 +197,10 @@ class CommentForm(ModelForm):
         super(CommentForm, self).__init__(*args, **kwargs)
         self.fields['text'].label = "Commentaire"
         self.fields['score'].label = "Note"
-        self.fields['user'].label = "Utilisateur"
 
     class Meta:
         model = Comment
-        fields = ('text', 'score', 'user')
+        fields = ('text', 'score')
 
 def DeleteComment(request, comment_id, movie_id):
     objet = Comment.objects.get(pk=comment_id)
@@ -215,6 +216,6 @@ def UpdateComment(request, comment_id):
             messages.success(request, 'Modification du commentaire réalisé')
             context = {'objet':objet}
             return redirect(reverse('ListFilms'))
-    form = CommentForm(instance=objet)
+    #form = CommentForm(instance=objet)
     context = {'form':form, 'objet':objet}
     return redirect(reverse('ListFilms'))
