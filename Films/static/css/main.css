@@ -31,7 +31,8 @@
 
 
 .card-img-top {
-    width: 100%;
+    width: auto;
+    height: 300px;
 }
 
 [class*="row"] {

@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 from .views import ListFilms
 from . import views as core_views
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
 
     #Film
@@ -27,4 +29,4 @@ urlpatterns = [
     path(r'detail/<int:movie_id>', views.detail, name='detail'),
     path(r'signup/', core_views.signup, name='signup'),
     
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

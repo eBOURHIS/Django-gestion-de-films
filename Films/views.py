@@ -31,12 +31,10 @@ def signup(request):
 
 def ListFilms(request):
     objets = Movie.objects.all().order_by('title')
+
     paginator = Paginator(objets, 3)
-
     page = request.GET.get('page')
-
     objets = paginator.get_page(page)
-
     return render(request,'ListFilms.html', {'objets':objets})
 
 def detail(request, movie_id):

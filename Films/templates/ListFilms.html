@@ -12,15 +12,13 @@
 {% endblock %}
 
 {% block content %}
-
-
-
+<!-- //placehold.it/350x200 -->
 <div class="container-fluid">
     <div class="row">
         <div class="card-deck mt-5">
             {% for elem in objets %}
             <div class="card">
-                <img class="card-img-top img-fluid" src="//placehold.it/350x200" alt="Card image cap">
+                <img class="card-img-top img-fluid" src="{{elem.image}}" alt="IMAGE">
                 <div class="card-block">
                     <div class="text-center">
                         <h4 class="card-title">{{elem.title}}</h4>
