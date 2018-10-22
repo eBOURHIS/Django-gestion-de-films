@@ -41,6 +41,7 @@
     </ul>
 </div>
 </div>
+{% if user.is_authenticated %}
 <div class="row">
     <form action="/films/detail/{{movie.id}}" method="post">
         {% csrf_token %}
@@ -48,6 +49,7 @@
         <input type="submit">
     </form>
 </div>
+{% endif %}
 {% endblock %}
 
 </html>
