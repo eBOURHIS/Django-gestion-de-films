@@ -17,8 +17,8 @@
 
 </head>
 
-<body class="bg-light">
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-5">
+<body class="bg-dark text-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary mb-5">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapse" aria-controls="navbarsExampleDefault"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -27,7 +27,7 @@
         <div class="collapse navbar-collapse" id="collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="navbar-brand" href="/films/list"><i class="fas fa-home">Accueil</i></a>
+                    <a class="navbar-brand" href="/films/list"><i class="fas fa-home fa-1x"></i></a>
                 </li>
                 
                 
@@ -39,7 +39,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" href="/films/director">
+                    <a class="nav-link active" href="/films/addDirector">
                         <i class="fas fa-plus">Réalisateur</i>
                     </a>
                 </li>
@@ -66,13 +66,13 @@
 
             <form class="form-inline my-2 my-lg-0" method="post" action="{% url 'login' %}" class="mt-5">
                 {% csrf_token %}
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-login"></i>Se
+                <button class="btn btn-success my-2 my-sm-0" type="submit"><i class="fa fa-login"></i>Se
                     connecter</button>
             </form>
 
             <form class="form-inline my-2 my-lg-0" method="post" action="/films/signup/" class="mt-5">
                 {% csrf_token %}
-                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="fa fa-login"></i>
+                <button class="btn btn-primary my-2 my-sm-0" type="submit"><i class="fa fa-login"></i>
                     S'inscrire</button>
             </form>
 

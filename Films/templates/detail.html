@@ -9,17 +9,28 @@
 <div class="col-6 text-center">
     <section class="card">
         <div class="card-header">
-            <h1>{{ movie.title }}</h1>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <h1>{{ movie.title }}</h1>
+                </li>
         </div>
-        <h3>{{movie.score}}/20</h3>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Date de sortie : {{movie.realease_date}}</li>
-            <li class="list-group-item">Genre : {{movie.genre}}</li>
-            <li class="list-group-item">Réalisateur : <u>{{movie.director}}</u></li>
-            <li class="list-group-item">Acteur : <br>
-                {% for actor in movie.actors.all %}
-                - {{ actor }}<br>
-                {% endfor %}</li>
+        <li class="list-group-item">
+            <h3>{{movie.score}}/20</h3>
+        </li>
+        <img class="card-img-top img-fluid imgdetail" src="../{{movie.image}}" alt="IMAGE">
+        <li class="list-group-item">Date de sortie : {{movie.realease_date}}</li>
+        <li class="list-group-item">Genre : {{movie.genre}}</li>
+        <li class="list-group-item">Réalisateur : <u>{{movie.director}}</u></li>
+        <li class="list-group-item">Acteur : <br>
+            {% for actor in movie.actors.all %}
+            - {{ actor }}<br>
+            {% endfor %}</li>
+        <li class="list-group-item">
+            <p>Résumé :</p>
+            <p class="synopsis">
+                {{movie.synopsis}}
+            </p>
+        </li>
         </ul>
     </section>
 </div>
@@ -27,12 +38,15 @@
 <div class="col-6 text-center">
     <h4>Commentaire</h4>
     <ul class="list-group">
-            {% for comment in movie.comments.all %}
-                <li class="list-group-item"> {{comment.user}}
-                ({{ comment.score }}/20)<br>
-    {{ comment.text }}<br>
-    
-    {% if user == comment.user %}
+        {% for comment in movie.comments.all %}
+        <li class="list-group-item"> {{comment.user}}
+
+            ({{ comment.score }}/20)
+            <br>
+            {{ comment.text }}
+            <br>
+
+            {% if user == comment.user %}
 
             <a href="/films/deleteComment/{{comment.id}}/{{movie.id}}" class="btn btn-danger">Supprimer</a></li>
 
@@ -42,6 +56,7 @@
 </div>
 </div>
 {% if user.is_authenticated %}
+{% if user != comment.user %}
 <div class="row">
     <form action="/films/detail/{{movie.id}}" method="post">
         {% csrf_token %}
@@ -49,6 +64,7 @@
         <input type="submit">
     </form>
 </div>
+{% endif %}
 {% endif %}
 {% endblock %}
 
