@@ -40,11 +40,5 @@
   justify-content: center;
 }
 
-[class*="col-"] {
-	background: #efefef;
-	border: 1px solid #ddd;
-	padding-top: .75rem;
-	padding-bottom: .75rem;
-	width: 100%;
-}
+
 

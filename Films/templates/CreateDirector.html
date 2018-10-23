@@ -2,20 +2,54 @@
 {%load static%}
 {%block title%}<title>Ajouter un réalisateur</title>{%endblock%}
 {% block styles %}
+{% load crispy_forms_tags %}
 {{block.super}}
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
     crossorigin="anonymous">
 {% endblock %}
 {% block content %}
 
-<h3>Créer un nouveau réalisateur</h3>
-<div class="row">
-    <form action="/films/addDirector" method="post">
-        {% csrf_token %}
-        {{form}}
-        <input type="submit">
-    </form>
+<h1 class="text-center">Liste des réalisateurs</h1>
 </div>
+<div class="row">
+    <div class="col-8">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" id="datable">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" class="text-center">Nom</th>
+                    <th scope="col" class="text-center">Prénom</th>
+                    <th scope="col" class="text-center">Modération</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for realisator in realisators %}
+                    <tr>
+                        <td class="text-center">{{realisator.name}}</td>
+                        <td class="text-center">{{realisator.firstname}}</td>
+                        <td class="text-center"><a href="director/edit/{{realisator.pk}}"><i class="fas fa-edit"></i></a> <a href="director/delete/{{realisator.pk}}"><i class="fas fa-trash-alt"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                    </table>
+                    </div>
+    </div>
+    <div class="col-4">
+            <form action="{{ path }}" method="POST" class="form-row">
+                    {% csrf_token %}
+                    <div class="col-md-6">
+                    {{ form.name|as_crispy_field }}
+                    </div>
+                    <div class="col-md-6">
+                      {{ form.firstname|as_crispy_field }}
+                    </div>
+                    <div class="col-md-12">
+                    <center><input type="submit" class="btn btn-success" value="Envoyer"></center>
+                    </div>
+                    </form>
+        </div>
+</div>
+
 
 
 {% endblock %}

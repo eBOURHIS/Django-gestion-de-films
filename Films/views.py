@@ -147,46 +147,46 @@ def UpdateActor(request, actor_id):
 #Realisateur
 
 class DirectorForm(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(DirectorForm, self).__init__(*args, **kwargs)
-        self.fields['firstname'].label = "Prénom"
-        self.fields['name'].label = "Nom"
     class Meta:
         model = Director
         fields = ('firstname', 'name')
+        labels = {
+            'name' : 'Nom',
+            'firstname' : 'Prénom',
+        }
 
-@login_required
-def AddDirector(request):
+def listRealisator(request):
+    realisators = Director.objects.all()
     form = DirectorForm()
     if request.method == 'POST':
         form = DirectorForm(request.POST)
         if form.is_valid():
-            new_Director = form.save()
-            messages.success(request, 'Nouveau realisateur')
-            context = {'objet': new_Director}
-            return redirect(reverse('ListFilms'))
-    context = {'form':form}
+            new_director = form.save()
+            return redirect(reverse('listRealisator'))
+    context = {"realisators":realisators, "form": form}
     return render(request, 'CreateDirector.html',context)
 
 @login_required
 def DeleteDirector(request, director_id):
-    objet = Director.objects.get(pk=director_id)
-    objet.delete()
-    return redirect(reverse('ListFilms'))
+    movies = Movie.objects.filter(director=Director.objects.get(pk=director_id))
+    for movie in movies:
+        movie.director = None
+        movie.save()
+    Director.objects.get(pk=director_id).delete()
+    return redirect(reverse('listRealisator'))
 
 @login_required
 def UpdateDirector(request, director_id):
-    objet = Director.objects.get(pk=director_id)
-    if request.method == "POST":
-        form = DirectorForm(request.POST, instance=objet)
+    realisators = Director.objects.all()
+    realisator = Director.objects.get(pk=director_id)
+    form = DirectorForm(instance=realisator)
+    if request.method == 'POST':
+        form = DirectorForm(request.POST, instance=realisator)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Modification de realisateur éffectuée')
-            context = {'objet':objet}
-            return redirect(reverse('ListFilms'))
-    form = DirectorForm(instance=objet)
-    context = {'form':form, 'objet':objet}
-    return redirect(reverse('ListFilms'))
+            return redirect(reverse('listRealisator'))
+    contexte = {'form': form, 'path' : str(director_id), 'realisators' : realisators}
+    return render(request, 'CreateDirector.html', contexte)
 
 #Comment
 

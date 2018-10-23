@@ -15,7 +15,7 @@ class Movie(models.Model):
     title = models.CharField(max_length=50)
     score = models.FloatField(max_length=20)
     realease_date = models.DateField()
-    director = models.ForeignKey(Director, on_delete=False, related_name="directors", default="")
+    director = models.ForeignKey(Director, on_delete=False, related_name="directors", null=True)
     genre = models.CharField(max_length=50)
     actors = models.ManyToManyField('Actor')
     comments = models.ManyToManyField('Comment', blank=True)
