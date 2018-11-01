@@ -45,15 +45,15 @@ body {
 }
 
 [class*="col-"] {
-    background-color: #636363;
-    border: 1px solid #ddd;
     padding-top: .75rem;
     padding-bottom: .75rem;
     width: 100%;
+
 }
 
 .card {
-    background-color: #636363;
+    background-color: #4b464685;
+    border-radius: 20px;
 }
 
 .list-group-item {

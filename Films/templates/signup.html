@@ -1,6 +1,13 @@
-{% extends 'base.html' %}
+{%extends 'base.html' %}
+    {%load static%}
+    {% block title %}<title>Créer un compte</title>{% endblock %}
+    {% block styles %}
+    {% load crispy_forms_tags %}
+    {{block.super}}
+    {% endblock %}
 {% block content %}
   <h2>Inscription</h2>
+  {% crispy form %}
   <form method="post">
     {% csrf_token %}
     {% for field in form %}
