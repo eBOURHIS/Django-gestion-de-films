@@ -18,6 +18,7 @@ class Movie(models.Model):
     director = models.ForeignKey(Director, on_delete=False, related_name="directors", null=True)
     genre = models.CharField(max_length=50)
     actors = models.ManyToManyField('Actor')
+    synopsis = models.TextField(max_length=1000, null=True)
     comments = models.ManyToManyField('Comment', blank=True)
     image = models.FileField(upload_to='', blank=True, null=True)
 
