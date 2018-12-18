@@ -10,6 +10,7 @@ from django.db import models
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 from django.core.paginator import Paginator
 
 # Create your views here.
@@ -28,9 +29,8 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
 
-def ListFilms(request):
-    objets = Movie.objects.all().order_by('title')
-
+def List(request):
+    objets = Movie.objects.all().order_by('release_date')
     paginator = Paginator(objets, 3)
     page = request.GET.get('page')
     objets = paginator.get_page(page)
@@ -52,28 +52,56 @@ def detail(request, movie_id):
     context = {'form':form}
     return render(request, 'detail.html', {'movie':movie, 'form':form, 'id':movie_id})
 
-@login_required
+class FilmForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(FilmForm, self).__init__(*args, **kwargs)
+        self.fields['title'].label = "Titre"
+        self.fields['score'].label = "Note"
+        self.fields['release_date'].label = "Date de Sortie"
+        self.fields['director'].label = "Realisateur"
+        self.fields['actors'].label = "Acteur"
+        self.fields['genre'].label = "Genre"
+        self.fields['synopsis'].label = "Synopsis"
+        self.fields['image'].label = "Image"
+
+    class Meta:
+        model = Movie
+        fields = ('title', 'score','release_date','director','actors','genre', 'synopsis', 'image')
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def listFilms(request):
+    movies = Movie.objects.all()
+    form = FilmForm()
+    if request.method == 'POST':
+        form = FilmForm(request.POST)
+        if form.is_valid():
+            new_movie = form.save()
+            return redirect(reverse('listFilms'))
+    context = {"movies": movies, "form": form}
+    return render(request, 'CreateFilm.html', context)
+
+@user_passes_test(lambda u: u.is_superuser)
 def DeleteFilm(request, film_id):
     objet = Movie.objects.get(pk=film_id)
     objet.delete()
     objets = Movie.objects.all().order_by('title')
-    return render(request, 'ListFilms.html',{'objets':objets})
+    return render(request, 'listFilms.html',{'objets':objets})
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def UpdateFilm(request, film_id):
-    objet = Movie.objects.get(pk=film_id)
-    if request.method == "POST":
-        form = FilmForm(request.POST, instance=objet)
+    films = Movie.objects.all()
+    film = Movie.objects.get(pk=film_id)
+    form = FilmForm(instance=film)
+    if request.method == 'POST':
+        form = ActorForm(request.POST, instance=film)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Modification du film: ' +objet.title+' effectuée')
-            context = {'objet':objet}
-            return render(request,'ListFilms.html', context)
-    form = FilmForm(instance=objet)
-    context = {'form':form, 'objet':objet}
-    return render(request,'UpdateFilm.html', context)
+            return redirect(reverse('listFilms'))
+    contexte = {'form': form, 'path' : str(film_id), 'films' : films}
+    return render(request, 'CreateFilm.html', contexte)
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def AddFilm(request):
     form = FilmForm()
     if request.method == 'POST':
@@ -86,31 +114,30 @@ def AddFilm(request):
     context = {'form':form}
     return render(request, 'CreateFilm.html',context)
 
-class FilmForm(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(FilmForm, self).__init__(*args, **kwargs)
-        self.fields['title'].label = "Titre"
-        self.fields['score'].label = "Note"
-        self.fields['realease_date'].label = "Date de Sortie"
-        self.fields['director'].label = "Realisateur"
-        self.fields['actors'].label = "Acteur"
-        self.fields['genre'].label = "Genre"
-    class Meta:
-        model = Movie
-        fields = ('title', 'score','realease_date','director','actors','genre')
-
 #Acteur
 
 class ActorForm(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(ActorForm, self).__init__(*args, **kwargs)
-        self.fields['firstname'].label = "Prénom"
-        self.fields['name'].label = "Nom"
     class Meta:
         model = Actor
         fields = ('firstname', 'name')
+        labels = {
+            'name' : 'Nom',
+            'firstname' : 'Prénom',
+        }
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def listActor(request):
+    actors = Actor.objects.all()
+    form = ActorForm()
+    if request.method == 'POST':
+        form = ActorForm(request.POST)
+        if form.is_valid():
+            new_actor = form.save()
+            return redirect(reverse('listActor'))
+    context = {"actors": actors, "form": form}
+    return render(request, 'CreateActor.html', context)
+
+@user_passes_test(lambda u: u.is_superuser)
 def AddActor(request):
     form = ActorForm()
     if request.method == 'POST':
@@ -119,29 +146,28 @@ def AddActor(request):
             new_Actor = form.save()
             messages.success(request, 'Nouveau acteur')
             context = {'objet': new_Actor}
-            return redirect(reverse('ListFilms'))
+            return redirect(reverse('listActor'))
     context = {'form':form}
     return render(request, 'CreateActor.html',context)
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def DeleteActor(request, actor_id):
     objet = Actor.objects.get(pk=actor_id)
     objet.delete()
-    return redirect(reverse('ListFilms'))
+    return redirect(reverse('listActor'))
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def UpdateActor(request, actor_id):
-    objet = Actor.objects.get(pk=actor_id)
-    if request.method == "POST":
-        form = FilmForm(request.POST, instance=objet)
+    actors = Actor.objects.all()
+    actor = Actor.objects.get(pk=actor_id)
+    form = ActorForm(instance=actor)
+    if request.method == 'POST':
+        form = ActorForm(request.POST, instance=actor)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Modification de acteur éffectuée')
-            context = {'objet':objet}
-            return redirect(reverse('ListFilms'))
-    form = ActorForm(instance=objet)
-    context = {'form':form, 'objet':objet}
-    return redirect(reverse('ListFilms'))
+            return redirect(reverse('listActor'))
+    contexte = {'form': form, 'path' : str(actor_id), 'actors' : actors}
+    return render(request, 'CreateActor.html', contexte)
 
 #Realisateur
 
@@ -154,6 +180,7 @@ class DirectorForm(ModelForm):
             'firstname' : 'Prénom',
         }
 
+@user_passes_test(lambda u: u.is_superuser)
 def listRealisator(request):
     realisators = Director.objects.all()
     form = DirectorForm()
@@ -165,7 +192,7 @@ def listRealisator(request):
     context = {"realisators":realisators, "form": form}
     return render(request, 'CreateDirector.html',context)
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def DeleteDirector(request, director_id):
     movies = Movie.objects.filter(director=Director.objects.get(pk=director_id))
     for movie in movies:
@@ -174,7 +201,7 @@ def DeleteDirector(request, director_id):
     Director.objects.get(pk=director_id).delete()
     return redirect(reverse('listRealisator'))
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def UpdateDirector(request, director_id):
     realisators = Director.objects.all()
     realisator = Director.objects.get(pk=director_id)
@@ -199,11 +226,13 @@ class CommentForm(ModelForm):
         model = Comment
         fields = ('text', 'score')
 
+@login_required
 def DeleteComment(request, comment_id, movie_id):
     objet = Comment.objects.get(pk=comment_id)
     objet.delete()
     return redirect('/films/detail/'+str(movie_id))
 
+@login_required
 def UpdateComment(request, comment_id):
     objet = Comment.objects.get(pk=comment_id)
     if request.method == "POST":

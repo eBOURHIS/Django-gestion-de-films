@@ -1,23 +1,53 @@
 {%extends 'base.html' %}
-    {%load static%}
-    {% block title %}<title>Ajouter un acteur</title>{% endblock %}
-    {% block styles %}
-    {% load crispy_forms_tags %}
-    {{block.super}}
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    {% endblock %}
-    {% block content %}
-    
-        <h1 class="text-center">Créer un nouveau acteur</h1>
-        <div class="row">
-                <div class="col-12">
-            <form action="/films/addActor" method="post">
-                {% csrf_token %}
-                {{form|crispy}}
-                <input class="btn btn-success" type="submit">
-            </form>
-            </div>
-        </div>
-        
+{%load static%}
+{%block title%}<title>Ajouter un acteur</title>{%endblock%}
+{% block styles %}
+{% load crispy_forms_tags %}
+{{block.super}}
+{% endblock %}
+{% block content %}
 
-    {% endblock %}
+<h1 class="text-center">Liste des acteurs</h1>
+</div>
+<div class="row">
+    <div class="col-8">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-dark" id="datable">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col" class="text-center">Nom</th>
+                    <th scope="col" class="text-center">Prénom</th>
+                    <th scope="col" class="text-center">Opérations</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for actor in actors %}
+                    <tr>
+                        <td class="text-center">{{actor.name}}</td>
+                        <td class="text-center">{{actor.firstname}}</td>
+                        <td class="text-center"><a href="actor/edit/{{actor.pk}}"><i class="fas fa-edit"></i></a> <a href="actor/delete/{{actor.pk}}"><i class="fas fa-trash-alt"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                    </table>
+                    </div>
+    </div>
+    <div class="col-4">
+            <form action="{{ path }}" method="POST" class="form-row">
+                    {% csrf_token %}
+                    <div class="col-md-6">
+                    {{ form.name|as_crispy_field }}
+                    </div>
+                    <div class="col-md-6">
+                      {{ form.firstname|as_crispy_field }}
+                    </div>
+                    <div class="col-md-12">
+                        <center> <input class="btn btn-success" type="submit"></center>
+                    </div>
+                    </form>
+        </div>
+</div>
+
+
+
+{% endblock %}

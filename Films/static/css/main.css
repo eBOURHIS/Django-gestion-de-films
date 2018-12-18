@@ -53,7 +53,7 @@ body {
 
 .card {
     background-color: #4b464685;
-    border-radius: 20px;
+    box-shadow: 10px 5px 5px rgb(29, 29, 29);
 }
 
 .list-group-item {
